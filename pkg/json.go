@@ -1,9 +1,7 @@
 package pkg
 
 import (
-	"gin-template/global"
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 )
 
 const (
@@ -31,9 +29,6 @@ func OkResponse(c *gin.Context, data interface{}) {
 
 // MessageResponse returns a JSONResponse with a 'message' key containing the given text.
 func MessageResponse(c *gin.Context, code int, msg, msgZh string) {
-	global.Log.Warn(msgZh, zap.Int("code", code),
-		zap.String("msg_zh", msgZh))
-	//Log.Warnf("12312")
 	c.JSON(code, JSONResponse{
 		Code: code,
 		Data: struct {

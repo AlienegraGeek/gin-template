@@ -1,8 +1,8 @@
 package config
 
 var Config = struct {
-	DB   DB     `yaml:"db"`
-	Zap  Zap    `yaml:"zap"`
+	DB DB `yaml:"db"`
+	//Zap  Zap    `yaml:"zap"`
 	Port string `yaml:"port"`
 }{}
 
@@ -13,17 +13,3 @@ type DB struct {
 	Password string `yaml:"password"`
 	Name     string `yaml:"name"`
 }
-
-//type NATS struct {
-//	Servers    []string `yaml:"[nats://localhost:4222]"`
-//	User       string   `yaml:"your_username"`
-//	Password   string   `yaml:"your_password"`
-//	Cluster    ClusterConfig
-//	QueueGroup string `yaml:"my-queue-group"`
-//}
-//
-//type ClusterConfig struct {
-//	Enabled   bool     `yaml:"false"`
-//	Name      string   `yaml:"my-cluster"`
-//	Endpoints []string `yaml:"[nats://node1:4222]"`
-//}
