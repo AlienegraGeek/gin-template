@@ -63,26 +63,6 @@ func AuthApp() gin.HandlerFunc {
 	}
 }
 
-// AuthWebOperationProtected 用于保护网页操作的路由
-func AuthWebOperationProtected(rights string) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		var (
-			authority = c.GetHeader(config.LocalAuthority)
-		)
-
-		//刷新token有效时间
-		if authority != "all" {
-			if authority != rights {
-				pkg.MessageResponse(c, config.OPERATION_FAIL, "un authorized operation", "无权限操作")
-				c.Abort()
-				return
-			}
-		}
-
-		c.Next()
-	}
-}
-
 // ManagerAuthProtected 是用于保护管理员操作的路由
 //func ManagerAuthProtected() gin.HandlerFunc {
 //	return func(c *gin.Context) {
