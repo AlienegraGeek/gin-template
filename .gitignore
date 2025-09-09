@@ -24,4 +24,3 @@ go.work
 go.sum
 .dbdate
 client.key
-.env
