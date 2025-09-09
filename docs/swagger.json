@@ -1,0 +1,86 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/lark/callback": {
+            "get": {
+                "description": "Lark 登录成功后的回调接口，返回用户信息和 JWT",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Lark"
+                ],
+                "summary": "Lark 登录回调",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Lark OAuth 授权码",
+                        "name": "code",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "OAuth 防 CSRF state",
+                        "name": "state",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "登录成功返回用户信息和 JWT",
+                        "schema": {
+                            "$ref": "#/definitions/types.CallbackResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "缺少参数或 state 校验失败",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JSONResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器或 Lark API 错误",
+                        "schema": {
+                            "$ref": "#/definitions/utils.JSONResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "types.CallbackResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                },
+                "user": {
+                    "type": "object",
+                    "additionalProperties": true
+                }
+            }
+        },
+        "utils.JSONResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "HTTP status code.",
+                    "type": "integer"
+                },
+                "data": {
+                    "description": "JSON represents the JSON that should be serialized and sent to the client"
+                }
+            }
+        }
+    }
+}

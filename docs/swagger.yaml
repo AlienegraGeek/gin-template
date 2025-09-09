@@ -1,0 +1,57 @@
+definitions:
+  types.CallbackResponse:
+    properties:
+      token:
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        type: string
+      user:
+        additionalProperties: true
+        type: object
+    type: object
+  utils.JSONResponse:
+    properties:
+      code:
+        description: HTTP status code.
+        type: integer
+      data:
+        description: JSON represents the JSON that should be serialized and sent to
+          the client
+    type: object
+info:
+  contact: {}
+paths:
+  /api/lark/callback:
+    get:
+      consumes:
+      - application/json
+      description: Lark 登录成功后的回调接口，返回用户信息和 JWT
+      parameters:
+      - description: Lark OAuth 授权码
+        in: query
+        name: code
+        required: true
+        type: string
+      - description: OAuth 防 CSRF state
+        in: query
+        name: state
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 登录成功返回用户信息和 JWT
+          schema:
+            $ref: '#/definitions/types.CallbackResponse'
+        "400":
+          description: 缺少参数或 state 校验失败
+          schema:
+            $ref: '#/definitions/utils.JSONResponse'
+        "500":
+          description: 服务器或 Lark API 错误
+          schema:
+            $ref: '#/definitions/utils.JSONResponse'
+      summary: Lark 登录回调
+      tags:
+      - Lark
+swagger: "2.0"
